@@ -22,9 +22,10 @@ jobs:
       - name: Build and test (generates JaCoCo XML)
         run: mvn -B clean verify
 
-            - name: SonarQube Scan (explicit path)
+      - name: SonarQube Scan (explicit path)
         uses: SonarSource/sonarqube-scan-action@v5
         with:
-          args: -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
+          args: >-
+            -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
