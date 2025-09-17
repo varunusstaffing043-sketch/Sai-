@@ -35,6 +35,8 @@ jobs:
         with:
           args: >-
             -X
+            -Dsonar.organization=REPLACE_WITH_SONARCLOUD_ORG_KEY
+            -Dsonar.projectKey=REPLACE_WITH_SONARCLOUD_PROJECT_KEY
             -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
