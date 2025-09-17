@@ -1,13 +1,13 @@
-name: Build
+name: Build and Analyze
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
     types: [opened, synchronize, reopened]
 
 jobs:
-  sonarcloud:
+  build:
     runs-on: ubuntu-latest
 
     permissions:
@@ -15,12 +15,12 @@ jobs:
       pull-requests: read
 
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Set up JDK
+      - name: Setup Java 17 with Maven cache
         uses: actions/setup-java@v4
         with:
           distribution: temurin
@@ -28,22 +28,14 @@ jobs:
           cache: maven
 
       - name: Build and test (generates JaCoCo XML)
-        run: mvn -B -e clean verify
+        run: mvn --batch-mode clean verify
 
-      # Creates the SonarCloud project if missing and outputs keys
-      - name: Setup SonarCloud
-        id: setupSonar
-        uses: nelsoncanarinho/setup-sonar@v1.0.0
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud@v1
         with:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-
-      - name: SonarCloud Scan (debug)
-        uses: SonarSource/sonarqube-scan-action@v5
-        with:
-          args: >-
-            -X
-            -Dsonar.organization=${{ steps.setupSonar.outputs.SONAR_ORGANIZATION }}
-            -Dsonar.projectKey=${{ steps.setupSonar.outputs.SONAR_PROJECT_KEY }}
+          args: >
+            -Dsonar.projectKey=varunusstaffing043-sketch_Sai-
+            -Dsonar.organization=varunusstaffing043-sketch
             -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
