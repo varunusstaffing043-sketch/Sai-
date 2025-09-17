@@ -1,17 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
-                             https://maven.apache.org/xsd/maven-4.0.0.xsd">
-
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <!-- Change these three identifiers for the project -->
   <groupId>com.example</groupId>
   <artifactId>sai-atm</artifactId>
   <version>1.0.0-SNAPSHOT</version>
   <name>Sai ATM</name>
   <description>ATM demo with tests and JaCoCo</description>
+
   <properties>
     <maven.compiler.source>17</maven.compiler.source>
     <maven.compiler.target>17</maven.compiler.target>
@@ -19,7 +17,6 @@
   </properties>
 
   <dependencies>
-    <!-- JUnit 5 for tests -->
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter</artifactId>
@@ -30,7 +27,6 @@
 
   <build>
     <plugins>
-      <!-- Surefire runs JUnit 5 tests on the JUnit Platform -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
@@ -40,14 +36,10 @@
         </configuration>
       </plugin>
 
-      <!-- JaCoCo agent + XML report at 'verify' -->
       <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
         <version>0.8.10</version>
         <executions>
           <execution>
-            <goals>
-              <goal>prepare-agent</goal>
-            </goals>
-          </execution>
+            <
