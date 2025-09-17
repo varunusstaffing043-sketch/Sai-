@@ -30,13 +30,20 @@ jobs:
       - name: Build and test (generates JaCoCo XML)
         run: mvn -B -e clean verify
 
+      # Creates the SonarCloud project if missing and outputs keys
+      - name: Setup SonarCloud
+        id: setupSonar
+        uses: nelsoncanarinho/setup-sonar@v1.0.0
+        with:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
       - name: SonarCloud Scan (debug)
         uses: SonarSource/sonarqube-scan-action@v5
         with:
           args: >-
             -X
-            -Dsonar.organization=REPLACE_WITH_SONARCLOUD_ORG_KEY
-            -Dsonar.projectKey=REPLACE_WITH_SONARCLOUD_PROJECT_KEY
+            -Dsonar.organization=${{ steps.setupSonar.outputs.SONAR_ORGANIZATION }}
+            -Dsonar.projectKey=${{ steps.setupSonar.outputs.SONAR_PROJECT_KEY }}
             -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
